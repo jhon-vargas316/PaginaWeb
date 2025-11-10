@@ -1,0 +1,538 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestión de Usuarios (Maqueta)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div id="section-login" class="page-section active">
+        <div class="form-container">
+            <h2>Acceder</h2>
+            <form id="login-form">
+                <div class="form-group">
+                    <label for="username">Usuario:</label>
+                    <input type="text" id="username" placeholder="usuario o rrhh" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Contraseña:</label>
+                    <input type="password" id="password" required>
+                </div>
+                <button type="submit" class="btn">Ingresar</button>
+                <a href="#" id="show-recover" class="link">Recuperar contraseña (US-50)</a>
+            </form>
+        </div>
+    </div>
+
+    <div id="section-recover" class="page-section">
+        <div class="form-container">
+            <h2>Recuperar Contraseña</h2>
+            <form id="recover-form">
+                <div class="form-group">
+                    <label for="email-recover">Correo electrónico:</label>
+                    <input type="email" id="email-recover" required>
+                </div>
+                <button type="submit" class="btn">Enviar enlace</button>
+                <a href="#" id="show-login" class="link">Volver a Login</a>
+            </form>
+        </div>
+    </div>
+
+    <div id="section-app" class="page-section">
+        <header class="app-header">
+            <h1>Plataforma de Gestión</h1>
+            <button id="logout-btn" class="btn btn-danger">Cerrar Sesión</button>
+        </header>
+        
+        <div class="app-body">
+            
+            <nav class="app-sidebar">
+                <button class="btn nav-btn" data-target="section-profile">Actualizar Datos</button>
+                <button class="btn nav-btn" data-target="section-security">Seguridad</button>
+                <button class="btn nav-btn" data-target="section-attendance">Control Asistencia</button>
+                <button class="btn nav-btn" data-target="section-my-shift">Mi Turno</button>
+                <button class="btn nav-btn" data-target="section-my-evals">Mis Evaluaciones</button>
+                <button class="btn nav-btn" data-target="section-my-training">Mis Capacitaciones</button>
+                
+                <div class="sidebar-divider rrhh-only">Admin</div>
+                <button class="btn nav-btn rrhh-only" data-target="section-dashboard-global">Dashboard Global</button>
+                <button class="btn nav-btn rrhh-only" data-target="section-reports-page">Reportes & KPIs</button>
+                <div class="sidebar-divider rrhh-only">Gestión</div>
+                <button class="btn nav-btn rrhh-only" data-target="section-shift-management">Gestionar Turnos</button>
+                <button class="btn nav-btn rrhh-only" data-target="section-eval-form">Evaluar Desempeño</button>
+                <button class="btn nav-btn rrhh-only" data-target="section-training-schedule">Programar Cursos</button>
+                <button class="btn nav-btn rrhh-only" data-target="section-hr-manage">Gestionar Usuarios</button>
+                <button class="btn nav-btn rrhh-only" data-target="section-admin">Administración</button>
+            </nav>
+
+            <main id="app-content">
+                <div class="content-section" id="content-default">
+                    <h2>Bienvenido</h2>
+                    <p>Selecciona una opción del menú para comenzar.</p>
+                </div>
+            </main>
+        </div>
+    </div>
+
+    <div style="display: none;">
+        
+        <div class="content-section" id="section-profile">
+            <h2>Actualizar Datos Personales (US-42)</h2>
+            <form class="content-form">
+                <div class="form-group"><label>Nombre:</label><input type="text" value="Usuario Ejemplo"></div>
+                <div class="form-group"><label>Correo:</label><input type="email" value="usuario@ejemplo.com"></div>
+                <div class="form-group"><label>Teléfono:</label><input type="tel" value="+56912345678"></div>
+                <button class="btn">Actualizar</button>
+            </form>
+        </div>
+
+        <div class="content-section" id="section-security">
+            <h2>Seguridad y 2FA (US-48)</h2>
+            <div class="form-group">
+                <label>Autenticación de Dos Factores (2FA):</label>
+                <div class="toggle-switch">
+                    <input type="checkbox" id="2fa-toggle" class="toggle-input">
+                    <label for="2fa-toggle" class="toggle-label"></label>
+                </div>
+                <span id="2fa-status-label">Estado: <b id="2fa-status">Desactivado</b></span>
+            </div>
+            <p>(Función 2FA desactivada temporalmente para evitar error de sintaxis)</p>
+        </div>
+
+        <div class="content-section" id="section-hr-create">
+            <h2>Crear Nuevo Usuario (US-45)</h2>
+            <form class="content-form" id="create-user-form">
+                <div class="report-section">
+                    <div class="form-group">
+                        <label>Nombre:</label>
+                        <input type="text" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Correo:</label>
+                        <input type="email" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Rol:</label>
+                        <select>
+                            <option value="user">Usuario</option>
+                            <option value="manager">Jefatura</option>
+                            <option value="rrhh">RRHH</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn">Crear Usuario</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="content-section" id="section-hr-manage">
+            <h2>Gestionar Usuarios (US-46 / US-47)</h2>
+            <table class="user-table">
+                <thead><tr><th>Usuario</th><th>Rol</th><th>Estado</th><th>Acciones</th></tr></thead>
+                <tbody>
+                    <tr>
+                        <td>usuario.activo@ejemplo.com</td><td>Usuario</td><td>Activo</td>
+                        <td><button class="btn btn-small">Editar Rol</button><button class="btn btn-small btn-danger">Desactivar</button></td>
+                    </tr>
+                    <tr>
+                        <td>usuario.inactivo@ejemplo.com</td><td>Usuario</td><td>Inactivo</td>
+                        <td><button class="btn btn-small btn-success">Activar</button></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="content-section" id="section-logs">
+            <h2>Logs de Actividad (US-49)</h2>
+            <div class="log-container">
+                <p><span class="log-time">[2025-11-03 14:20:01]</span> <span class="log-user">[rrhh]</span> - Inició sesión.</p>
+                <p><span class="log-time">[2025-11-03 14:19:50]</span> <span class="log-user">[usuario.activo]</span> - Fallo de inicio de sesión.</p>
+            </div>
+        </div>
+        
+        <div class="content-section" id="section-attendance">
+            <h2>Control de Asistencia</h2>
+            <div class="attendance-controls">
+                <button class="btn btn-success btn-attendance" id="btn-clock-in"><span class="icon">►</span> Registrar Entrada (TU-02)</button>
+                <button class="btn btn-danger btn-attendance" id="btn-clock-out"><span class="icon">■</span> Registrar Salida (TU-03)</button>
+            </div>
+            <hr class="section-divider">
+            <h3>Simulación de Sincronización (TU-04 / TU-05)</h3>
+            <div class="form-group">
+                <label>Simular Modo Offline:</label>
+                <div class="toggle-switch"><input type="checkbox" id="offline-toggle" class="toggle-input"><label for="offline-toggle" class="toggle-label"></label></div>
+            </div>
+            <div id="sync-status-container" class="sync-status"></div>
+            
+            <hr class="section-divider">
+            <h3>Simulación de Notificaciones (OT-51)</h3>
+            <button class="btn" id="btn-simulate-push" style="width: auto;">
+                Simular Notificación de Turno
+            </button>
+        </div>
+
+        <div class="content-section" id="section-my-shift">
+            <h2>Mi Turno Asignado (TU-01)</h2>
+            <div class="shift-card">
+                <h3>Turno Próxima Semana</h3>
+                <p><strong>Faena:</strong> Minera Escondida</p><p><strong>Turno:</strong> 7x7 (Día)</p>
+                <p><strong>Fecha Inicio:</strong> Lunes, 17 de Noviembre, 2025</p>
+                <p><strong>Fecha Término:</strong> Domingo, 23 de Noviembre, 2025</p>
+            </div>
+        </div>
+
+        <div class="content-section" id="section-shift-management">
+            <h2>Gestionar Turnos (TU-06 / TU-07)</h2>
+            <form class="content-form" id="shift-assign-form">
+                <div class="form-group"><label>Trabajador (RUT o Nombre):</label><input type="text" placeholder="20.123.456-7" required></div>
+                <div class="form-group"><label>Tipo de Turno:</label><select><option value="7x7d">7x7 (Día)</option><option value="7x7n">7x7 (Noche)</option></select></div>
+                <div class="form-group"><label>Fecha de Inicio:</label><input type="date"></div>
+                <button type="submit" class="btn">Asignar / Modificar Turno</button>
+            </form>
+        </div>
+
+        <div class="content-section" id="section-my-evals">
+            <h2>Mis Evaluaciones (ED-21)</h2>
+            <div class="report-section">
+                <h3>Evolución de Desempeño (ED-22)</h3>
+                <p>Comparativa de puntaje global (ED-25).</p>
+                <div class="performance-chart">
+                    <div class="chart-bar" style="height: 60%;"><span>T1-2024 (6.0)</span></div>
+                    <div class="chart-bar" style="height: 55%;"><span>T2-2024 (5.5)</span></div>
+                    <div class="chart-bar" style="height: 75%;"><span>T1-2025 (7.5)</span></div>
+                    <div class="chart-bar" style="height: 85%;"><span>T2-2025 (8.5)</span></div>
+                </div>
+            </div>
+            <div class="report-section">
+                <h3>Historial de Evaluaciones</h3>
+                <div class="eval-list"><div class="eval-list-item"><strong>Evaluación T2-2025</strong><span>Puntaje: 8.5/10 - (Firmada)</span><button class="btn btn-small" style="width: auto;">Ver Detalle</button></div></div>
+            </div>
+        </div>
+
+        <div class="content-section" id="section-eval-form">
+            <h2>Evaluar Desempeño (ED-23)</h2>
+            <form class="content-form" id="eval-form-submit">
+                <div class="report-section">
+                    <h3>Datos del Trabajador</h3>
+                    <div class="form-group"><label>Seleccionar Trabajador:</label><input type="text" placeholder="Buscar por RUT o Nombre..." required></div>
+                </div>
+                <div class="report-section">
+                    <h3>Formulario Estandarizado</h3>
+                    <div class="form-group"><label>1. Seguridad y Cumplimiento:</label><select><option>1 - Insatisfactorio</option><option selected>5 - Sobresaliente</option></select></div>
+                    <div class="form-group"><label>Comentarios Cualitativos (ED-24):</label><textarea rows="4" placeholder="Añadir comentarios..."></textarea></div>
+                </div>
+                <div class="report-section">
+                    <h3>Firma Digital (ED-30)</h3>
+                    <div class="signature-pad">[Simulación de Pad de Firma Digital]</div>
+                    <button type="submit" class="btn btn-success" style="margin-top: 1rem;">Firmar y Enviar Evaluación</button>
+                </div>
+            </form>
+        </div>
+        
+        <div class="content-section" id="section-eval-criteria">
+            <h2>Definir Criterios de Evaluación (ED-26)</h2>
+            <div class="report-section">
+                <form id="criteria-form">
+                    <p>Añada o edite los criterios estandarizados.</p>
+                    <div class="form-group"><label>Nombre del Criterio:</label><input type="text" value="3. Trabajo en Equipo"></div>
+                    <div class="form-group"><label>Descripción:</label><textarea rows="3">Capacidad de colaborar...</textarea></div>
+                    <button type="submit" class="btn">Guardar Criterio</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="content-section" id="section-my-training">
+            <h2>Mis Capacitaciones (CC-11)</h2>
+            <div class="report-section">
+                <h3>Alertas de Vencimiento (CC-12)</h3>
+                <div class="alert-box alert-training">
+                    <strong>¡Atención!</strong> Tu certificación "Manejo Defensivo" vence en <strong>6 días</strong>. (Vence: 15/11/2025)
+                </div>
+            </div>
+            <div class="report-section">
+                <h3>Historial de Cursos (CC-15)</h3>
+                <div class="training-list">
+                    <div class="training-list-item">
+                        <div><strong>Manejo Defensivo Alta Montaña</strong> (CC-11)<p>Vence: 15/11/2025</p></div>
+                        <button class="btn btn-small" id="btn-download-cert" style="width: auto;"><span class="icon">📕</span> Descargar PDF (CC-13)</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="content-section" id="section-training-register">
+            <h2>Registrar Participación (CC-14)</h2>
+            <div class="report-section">
+                <form class="content-form" id="register-training-form">
+                    <p>Registra la asistencia de un trabajador a un curso completado.</p>
+                    <div class="form-group">
+                        <label>Buscar Trabajador (RUT):</label>
+                        <input type="text" placeholder="11.222.333-4" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Curso Completado:</label>
+                        <select required>
+                            <option value="">Seleccione un curso...</option>
+                            <option>Manejo Defensivo Alta Montaña</option>
+                            <option>Bloqueo y Aislamiento (LOTO)</option>
+                            <option>Curso de Primeros Auxilios</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Fecha de Completación:</label>
+                        <input type="date" required>
+                    </div>
+                    <button type="submit" class="btn">Registrar Asistencia</button>
+                </form>
+            </div>
+        </div>
+
+        <div class="content-section" id="section-training-schedule">
+            <h2>Programar Capacitaciones (CC-17 / CC-18)</h2>
+            <div class="report-section">
+                <form class="content-form" id="schedule-training-form">
+                    <div class="form-group"><label>Nombre del Curso:</label><input type="text" placeholder="Ej: Seguridad en Altura" required></div>
+                    <div class="form-group"><label>Asignar a Grupos (CC-18):</label>
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="chk-g1"><label for="chk-g1">Cuadrilla Alfa</label>
+                            <input type="checkbox" id="chk-g2"><label for="chk-g2">Nuevos Ingresos</label>
+                        </div>
+                    </div>
+                    <button type="submit" class="btn">Programar Nuevo Curso</button>
+                </form>
+            </div>
+        </div>
+        
+        <div class="content-section" id="section-dashboard-global">
+            <div class="dashboard-header">
+                <h2>Dashboard Global (RP-40)</h2>
+                <div class="real-time-indicator">
+                    <span class="pulse"></span>EN TIEMPO REAL
+                </div>
+            </div>
+            
+            <div class="kpi-card-container">
+                <div class="kpi-card">
+                    <h3>KPI: Cumplimiento Asistencia (OT-55)</h3>
+                    <div class="kpi-value kpi-good">98.5%</div>
+                    <p>Meta: 96%</p>
+                </div>
+                <div class="kpi-card">
+                    <h3>KPI: Certificaciones Vencidas (OT-55)</h3>
+                    <div class="kpi-value kpi-bad">12</div>
+                    <p>Total trabajadores con cursos vencidos</p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Métrica: Desempeño Promedio (OT-54)</h3>
+                    <div class="kpi-value kpi-ok">7.8 / 10</div>
+                    <p>Último período (T2-2025)</p>
+                </div>
+                <div class="kpi-card">
+                    <h3>Métrica: Incidentes Seguridad (OT-54)</h3>
+                    <div class="kpi-value kpi-good">2</div>
+                    <p>Incidentes menores (Últimos 30 días)</p>
+                </div>
+            </div>
+
+            <div class="report-section">
+                <h3>Alertas Preventivas (RP-36)</h3>
+                <div class="alert-box alert-warning">
+                    <strong>Incumplimiento Normativo (RP-36):</strong> Faena "Los Bronces" reporta 80% de cumplimiento en LOTO. (Meta: 95%)
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section" id="section-reports-page">
+            <h2>Reportes & KPIs Consolidados</h2>
+            
+            <nav class="tab-nav">
+                <button class="tab-nav-btn active" data-tab="tab-security">Seguridad (RP-32)</button>
+                <button class="tab-nav-btn" data-tab="tab-attendance">Asistencia (TU-08)</button>
+                <button class="tab-nav-btn" data-tab="tab-performance">Desempeño (ED-27)</button>
+                <button class="tab-nav-btn" data-tab="tab-training">Capacitación (CC-19)</button>
+            </nav>
+
+            <main class="tab-content">
+                <div class="tab-pane active" id="tab-security">
+                    <h3>Reportes de Seguridad (RP-32)</h3>
+                    <div class="report-filters">
+                        <div class="form-group">
+                            <label>Filtrar por Faena (RP-35, RP-38):</label>
+                            <select><option value="all">Consolidado Faenas</option><option>Faena Escondida</option><option>Faena Los Bronces</option></select>
+                        </div>
+                        <div class="form-group">
+                            <label>Filtrar por Período (RP-39):</label>
+                            <input type="month" value="2025-11">
+                        </div>
+                    </div>
+                    <div class="report-section">
+                        <h4>Cumplimiento Normativo (RP-33)</h4>
+                        <div class="compliance-chart">
+                            <strong>Norma ISO 45001</strong>
+                            <div class="progress-bar"><div class="progress" style="width: 88%;">88%</div></div>
+                        </div>
+                    </div>
+                    <div class="export-buttons">
+                        <button class="btn" id="btn-print-report"><span class="icon">🖨️</span> Imprimir Reporte (OT-59)</button>
+                        <button class="btn" id="btn-export-global"><span class="icon">🌍</span> Exportar Global (RP-37)</button>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab-attendance">
+                    <h3>Reportes de Asistencia</h3>
+                    <div class="report-section">
+                        <h4>Alertas de Asistencia Irregular (OT-52)</h4>
+                        <div class="alert-box alert-danger"><strong>Alerta (Grave):</strong> J. Pérez no registra salida.</div>
+                    </div>
+                    <div class="report-section">
+                        <h4>Reporte de Cuadrilla (RP-31)</h4>
+                        <table class="user-table">
+                            <thead><tr><th>Trabajador</th><th>Estado Actual</th></tr></thead>
+                            <tbody>
+                                <tr><td>Juan Pérez</td><td><span class="status-in">EN FAENA</span></td></tr>
+                                <tr><td>Ana Rojas</td><td><span class="status-out">DESCANSO</span></td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="report-section">
+                        <h4>Reporte Gerencial de Asistencia (TU-09)</h4>
+                        <p>Consolidado de asistencia de todas las faenas (Filtrado por período).</p>
+                        <div class="kpi-card-container" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
+                            <div class="kpi-card">
+                                <h3>Asistencia General</h3>
+                                <div class="kpi-value kpi-good">97.8%</div>
+                            </div>
+                            <div class="kpi-card">
+                                <h3>Horas Extra (Total)</h3>
+                                <div class="kpi-value kpi-ok">1,240</div>
+                            </div>
+                            <div class="kpi-card">
+                                <h3>Ausentismo</h3>
+                                <div class="kpi-value kpi-bad">2.2%</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="report-section">
+                        <h4>Exportar (TU-10)</h4>
+                        <div class="export-buttons">
+                            <button class="btn" id="btn-export-excel"><span class="icon">📄</span> Exportar a Excel</button>
+                            <button class="btn" id="btn-export-pdf"><span class="icon">📕</span> Exportar a PDF</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab-performance">
+                    <h3>Reportes de Desempeño (ED-27 / ED-28)</h3>
+                    <div class="report-section">
+                        <h4>Alertas de Desempeño (ED-29)</h4>
+                        <div class="alert-box alert-info"><strong>Alerta (Bajo Desempeño):</strong> R. Soto evaluado bajo 3.0.</div>
+                    </div>
+                </div>
+
+                <div class="tab-pane" id="tab-training">
+                    <h3>Reportes de Capacitación (CC-19 / CC-20)</h3>
+                    <div class="report-section">
+                        <h4>Alertas de Vencimiento (Supervisor) (CC-16)</h4>
+                        <div class="alert-box alert-training"><strong>Alerta (Cuadrilla Alfa):</strong> J. Pérez - "Manejo Defensivo" vence en 6 días.</div>
+                    </div>
+                    <div class="report-section">
+                        <h4>Estadísticas Globales (CC-20)</h4>
+                        <div class="compliance-chart">
+                            <strong>Manejo Defensivo</strong>
+                            <div class="progress-bar"><div class="progress" style="width: 95%;">95%</div></div>
+                        </div>
+                    </div>
+                </div>
+            </main>
+        </div>
+
+        <div class="content-section" id="section-admin">
+            <h2>Panel de Administración</h2>
+
+            <div class="report-section">
+                <h3>Base de Datos (OT-56 / OT-57)</h3>
+                <div class="export-buttons">
+                    <button class="btn btn-success" id="btn-backup-db"><span class="icon">💾</span> Respaldar BD (OT-56)</button>
+                    <button class="btn btn-danger" id="btn-restore-db"><span class="icon">🔄</span> Restaurar Respaldo (OT-57)</button>
+                </div>
+            </div>
+            
+            <div class="report-section">
+                <h3>Logs y Criterios</h3>
+                <div class="export-buttons">
+                    <button class="btn nav-btn-inline" data-target="section-logs" id="btn-goto-logs">Ver Logs de Actividad (US-49)</button>
+                    <button class="btn nav-btn-inline" data-target="section-eval-criteria" id="btn-goto-criteria">Definir Criterios Evaluación (ED-26)</button>
+                </div>
+            </div>
+            
+            <div class="report-section">
+                <h3>Usuarios y Capacitación</h3>
+                <div class="export-buttons">
+                    <button class="btn nav-btn-inline" data-target="section-hr-create" id="btn-goto-create-user">Crear Usuario Nuevo (US-45)</button>
+                    <button class="btn nav-btn-inline" data-target="section-training-register" id="btn-goto-register-training">Registrar Asistencia a Curso (CC-14)</button>
+                </div>
+            </div>
+
+            <div class="report-section">
+                <h3>Reportes Automáticos (RP-34)</h3>
+                <form class="content-form" id="auto-report-form">
+                    <div class="form-group">
+                        <label>Reporte a enviar:</label>
+                        <select><option>Reporte Global de Asistencia</option><option>Reporte de Cumplimiento Normativo</option></select>
+                    </div>
+                    <div class="form-group">
+                        <label>Frecuencia:</label>
+                        <select><option>Semanal</option><option selected>Mensual</option></select>
+                    </div>
+                    <button class="btn" style="width: auto;">Guardar Configuración</button>
+                </form>
+            </div>
+            
+            <div class="report-section">
+                <h3>Configurar Notificaciones de Capacitaciones (OT-53)</h3>
+                <form class="content-form" id="notif-config-form">
+                    <div class="form-group">
+                        <label>Notificar vencimientos con (días de antelación):</label>
+                        <input type="number" value="30">
+                    </div>
+                    <div class="form-group">
+                        <label>Activar notificaciones a Supervisores (CC-16):</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="notif-toggle-sup" class="toggle-input" checked>
+                            <label for="notif-toggle-sup" class="toggle-label"></label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Activar notificaciones a Trabajadores (CC-12):</label>
+                        <div class="toggle-switch">
+                            <input type="checkbox" id="notif-toggle-usr" class="toggle-input" checked>
+                            <label for="notif-toggle-usr" class="toggle-label"></label>
+                        </div>
+                    </div>
+                    <button class="btn" style="width: auto;">Guardar Configuración</button>
+                </form>
+            </div>
+
+        </div> </div> <div id="confirmation-modal" class="modal-overlay">
+        <div class="modal-content">
+            <span class="modal-icon">✔</span>
+            <h2 id="modal-message">¡Registro Exitoso!</h2>
+            <p>Tu asistencia ha sido registrada.</p>
+        </div>
+    </div>
+
+    <div id="push-notification" class="toast">
+        <div class="toast-header">
+            <strong>Cambio de Turno (OT-51)</strong>
+        </div>
+        <div class="toast-body">
+            Tu turno de mañana ha sido re-asignado a las 10:00 AM.
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
