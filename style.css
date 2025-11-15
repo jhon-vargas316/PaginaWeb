@@ -73,35 +73,37 @@ body {
 .btn-small { padding: 0.4rem 0.8rem; font-size: 0.8rem; width: auto; }
 
 /* ============================================== */
-/* ====== NUEVA ESTRUCTURA DE LAYOUT DE APP ====== */
+/* ====== ESTRUCTURA DE LAYOUT DE APP ====== */
 /* ============================================== */
 
 #section-app {
     display: none;
-    width: 100vw; /* Ocupa toda la pantalla */
-    max-width: 100%; /* Sobreescribe el max-width anterior */
-    height: 100vh; /* Ocupa toda la altura */
+    width: 100vw;
+    max-width: 100%;
+    height: 100vh;
     min-height: 100vh;
     margin: 0;
     border-radius: 0;
-    background: rgba(248, 248, 248, 0.95);
+    background: #f4f7f6; /* Un fondo ligeramente más suave */
     box-shadow: none;
-    flex-direction: column; /* Cambiado a columna para el header */
+    flex-direction: column;
     justify-content: flex-start;
 }
 #section-app.active { display: flex; }
 
 .app-header {
     background-color: #fff;
-    padding: 0.8rem 2rem; /* Más delgado */
+    padding: 0.8rem 2rem;
     border-bottom: 1px solid #ddd;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    flex-shrink: 0; /* No se encoge */
-    z-index: 100; /* Asegura que esté sobre el contenido si hay scroll */
-    position: sticky; /* Se pega arriba */
+    flex-shrink: 0;
+    z-index: 100;
+    position: fixed; /* Header Fijo */
     top: 0;
+    left: 0;
+    right: 0;
 }
 .app-header h1 { margin: 0; font-size: 1.5rem; }
 .app-header #logout-btn { width: auto; }
@@ -109,30 +111,24 @@ body {
 /* Contenedor del Sidebar + Contenido */
 .app-body {
     display: flex;
-    flex-grow: 1; /* Ocupa el resto del espacio */
-    overflow: hidden; /* Evita el scroll del body */
+    flex-grow: 1;
+    overflow: hidden;
+    margin-top: 61px; /* Altura del header fijo */
 }
 
 /* --- PANEL LATERAL (SIDEBAR) --- */
 .app-sidebar {
     width: 240px;
-    flex-shrink: 0; /* No se encoge */
-    background-color: #f1f1f1;
+    flex-shrink: 0;
+    background-color: #fff; /* Fondo blanco */
     border-right: 1px solid #ddd;
     padding: 1rem;
-    overflow-y: auto; /* Scroll si hay muchos botones */
+    overflow-y: auto;
     display: flex;
     flex-direction: column;
     gap: 8px;
-
-    /* --- CAMBIOS PARA HACER EL SIDEBAR FIJO --- */
-    position: fixed; /* Lo hace fijo en la ventana */
-    top: 0; /* Lo pega arriba */
-    left: 0; /* Lo pega a la izquierda */
-    height: 100vh; /* Ocupa toda la altura de la ventana */
-    padding-top: 5rem; /* Espacio para el header */
-    box-sizing: border-box; /* Para que el padding no añada altura */
-    z-index: 90; /* Debajo del header pero encima del contenido */
+    z-index: 90;
+    transition: transform 0.3s ease-in-out; /* Transición para móvil */
 }
 
 .sidebar-divider {
@@ -148,29 +144,28 @@ body {
 /* --- Botones del Sidebar --- */
 .app-sidebar .nav-btn {
     width: 100%;
-    background-color: #eee;
+    background-color: transparent; /* Fondo transparente */
     color: #333;
     text-align: left;
     padding: 0.8rem 1rem;
     margin: 0;
-    position: relative; /* Para el indicador */
+    position: relative;
 }
 .app-sidebar .nav-btn:hover {
-    background-color: #ddd;
-    transform: none; /* Quitamos la animación de hover */
+    background-color: #f0f0f0; /* Hover sutil */
+    transform: none;
     box-shadow: none;
 }
 .app-sidebar .nav-btn:active {
-    transform: scale(0.99); /* Click sutil */
+    transform: scale(0.99);
 }
 
 /* --- INDICADOR DE BOTÓN ACTIVO --- */
 .app-sidebar .nav-btn.active {
-    background-color: #e0eaff; /* Color de fondo activo */
+    background-color: #e0eaff;
     color: #0056b3;
     font-weight: 700;
 }
-/* La barra lateral azul */
 .app-sidebar .nav-btn.active::before {
     content: '';
     position: absolute;
@@ -185,43 +180,61 @@ body {
 /* Botones dentro de la admin page */
 .nav-btn-inline {
     width: auto;
-    background-color: #007aff; /* ¡NUEVO! Color azul primario */
-    color: white;             /* ¡NUEVO! Texto blanco */
-    font-weight: 600;         /* Para que se parezca al resto de botones azules */
-    margin: 0;                /* Ajuste para que se alinee bien */
-    padding: 0.8rem 1.5rem;   /* Mismo padding que .btn */
+    background-color: #007aff;
+    color: white;
+    font-weight: 600;
+    margin: 0;
+    padding: 0.8rem 1.5rem;
 }
-
-/* Añadimos los mismos efectos hover/active que los botones principales */
 .nav-btn-inline:hover {
     background-color: #0056b3;
     transform: scale(1.03) translateY(-2px);
     box-shadow: 0 6px 15px rgba(0, 122, 255, 0.3);
 }
-
 .nav-btn-inline:active {
     transform: scale(0.98);
     box-shadow: none;
 }
 
+
 /* Contenido Principal (al lado del sidebar) */
 #app-content {
     padding: 2rem;
     flex-grow: 1;
-    overflow-y: auto; /* Permite scroll en el contenido */
-    
-    /* --- CAMBIOS PARA EL CONTENIDO SE MUEVA BIEN CON EL SIDEBAR FIJO --- */
-    margin-left: 240px; /* Desplaza el contenido a la derecha del sidebar */
-    padding-top: 5rem; /* Espacio para el header fijo */
-    width: calc(100% - 240px); /* Ajusta el ancho para el sidebar */
-    height: 100vh; /* Ocupa toda la altura de la ventana */
-    box-sizing: border-box; /* Para que el padding no añada altura */
+    overflow-y: auto;
+    width: calc(100% - 240px);
+    margin-left: 240px; /* Desplaza el contenido */
 }
 .rrhh-only { display: none; }
 
 
 /* ============================================== */
-/* ====== ESTILOS DE COMPONENTES (Sin cambios significativos) ==== */
+/* ====== BOTONES RESPONSIVOS (HAMBURGUESA) ====== */
+/* ============================================== */
+
+.hamburger-btn {
+    font-size: 1.8rem;
+    padding: 0 1rem;
+    background: transparent;
+    border: none;
+    color: #333;
+    cursor: pointer;
+    display: none; /* Oculto en escritorio */
+}
+.sidebar-close-btn {
+    font-size: 1.5rem;
+    padding: 0.5rem;
+    background: transparent;
+    border: none;
+    color: #555;
+    cursor: pointer;
+    text-align: right;
+    display: none; /* Oculto en escritorio */
+}
+
+
+/* ============================================== */
+/* ====== COMPONENTES (Formularios, Tablas, etc.) ==== */
 /* ============================================== */
 
 /* --- FORMULARIOS Y ELEMENTOS INTERNOS --- */
@@ -255,14 +268,18 @@ body {
     width: 100%;
     border-collapse: collapse;
     margin-top: 1rem;
+    overflow-x: auto; /* Permite scroll horizontal en móvil */
+    display: block;
 }
 .user-table th, .user-table td {
     border: 1px solid #ddd;
     padding: 0.8rem;
     text-align: left;
+    white-space: nowrap; /* Evita que el texto se rompa */
 }
 .user-table th { background-color: #f4f4f4; }
 .user-table td .btn { margin-right: 5px; }
+
 .log-container {
     background: #2b2b2b;
     color: #f1f1f1;
@@ -315,6 +332,7 @@ body {
     display: flex;
     gap: 20px;
     margin: 2rem 0;
+    flex-wrap: wrap; /* Móvil */
 }
 .btn-attendance {
     font-size: 1.2rem;
@@ -324,6 +342,8 @@ body {
     align-items: center;
     justify-content: center;
     gap: 10px;
+    min-width: 200px; /* Móvil */
+    flex-grow: 1;
 }
 .btn-attendance .icon {
     font-size: 1.5rem;
@@ -370,6 +390,8 @@ hr.section-divider {
     box-shadow: 0 10px 30px rgba(0,0,0,0.2);
     transform: scale(0.9);
     animation: modal-pop 0.3s ease-out forwards;
+    width: 90%;
+    max-width: 500px;
 }
 .modal-icon {
     font-size: 4rem;
@@ -504,6 +526,7 @@ hr.section-divider {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    gap: 10px; /* Espacio para móvil */
 }
 .eval-list-item strong {
     font-size: 1.1rem;
@@ -593,6 +616,7 @@ hr.section-divider {
     justify-content: space-between;
     align-items: center;
     flex-wrap: wrap;
+    gap: 10px;
 }
 .training-list-item.status-pending {
     border-left-color: #ffc107; /* Amarillo (Pendiente) */
@@ -657,6 +681,8 @@ hr.section-divider {
     justify-content: space-between;
     align-items: center;
     margin-bottom: 1.5rem;
+    flex-wrap: wrap; /* Móvil */
+    gap: 10px;
 }
 .real-time-indicator {
     font-size: 0.9rem;
@@ -763,4 +789,74 @@ hr.section-divider {
 }
 .report-filters .form-group label {
     font-size: 0.9rem;
+}
+
+/* ============================================== */
+/* ====== ESTILOS RESPONSIVOS (OT-60) ====== */
+/* ============================================== */
+
+/* Usamos 768px como punto de quiebre (tablets y móviles) */
+@media (max-width: 768px) {
+    
+    .app-header {
+        padding: 0.8rem 1rem; /* Menos padding en móvil */
+    }
+    
+    .app-header h1 {
+        font-size: 1.2rem; /* Título más pequeño */
+    }
+
+    .hamburger-btn {
+        display: block; /* Mostrar botón hamburguesa */
+    }
+
+    .app-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        height: 100vh;
+        width: 260px; /* Ancho del panel deslizable */
+        z-index: 1000; /* Encima de todo */
+        transform: translateX(-100%); /* Oculto fuera de la pantalla */
+        padding-top: 1rem; /* Quitar el padding del header fijo */
+        box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+    }
+    
+    .app-sidebar.open {
+        transform: translateX(0); /* Mostrar panel */
+    }
+
+    .sidebar-close-btn {
+        display: block; /* Mostrar botón de cierre */
+    }
+
+    #app-content {
+        margin-left: 0; /* Contenido ocupa 100% */
+        width: 100%;
+        padding: 1.5rem; /* Menos padding en móvil */
+    }
+    
+    .kpi-card-container {
+        grid-template-columns: 1fr; /* KPIs uno sobre otro */
+    }
+    
+    .dashboard-header {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    
+    .tab-nav-btn {
+        padding: 0.8rem 1rem;
+        font-size: 0.9rem;
+    }
+    
+    .form-container {
+        width: 100%;
+        height: 100vh;
+        border-radius: 0;
+        box-shadow: none;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 }
