@@ -42,13 +42,18 @@
 
     <div id="section-app" class="page-section">
         <header class="app-header">
+            <button id="hamburger-btn" class="hamburger-btn">☰</button>
+            
             <h1>Plataforma de Gestión</h1>
             <button id="logout-btn" class="btn btn-danger">Cerrar Sesión</button>
         </header>
         
         <div class="app-body">
             
-            <nav class="app-sidebar">
+            <nav class="app-sidebar" id="app-sidebar">
+                
+                <button id="sidebar-close-btn" class="sidebar-close-btn">✖</button>
+
                 <button class="btn nav-btn" data-target="section-profile">Actualizar Datos</button>
                 <button class="btn nav-btn" data-target="section-security">Seguridad</button>
                 <button class="btn nav-btn" data-target="section-attendance">Control Asistencia</button>
