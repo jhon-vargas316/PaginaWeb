@@ -71,7 +71,23 @@ document.addEventListener('DOMContentLoaded', () => {
     // --- NAVEGACIÓN DENTRO DE LA APP ---
 
     const appContentContainer = document.getElementById('app-content');
-    
+    const sidebar = document.getElementById('app-sidebar');
+    const hamburgerBtn = document.getElementById('hamburger-btn');
+    const sidebarCloseBtn = document.getElementById('sidebar-close-btn');
+
+    // --- NUEVO: Lógica del Menú Hamburguesa (OT-60) ---
+    if (hamburgerBtn) {
+        hamburgerBtn.addEventListener('click', () => {
+            sidebar.classList.add('open');
+        });
+    }
+
+    if (sidebarCloseBtn) {
+        sidebarCloseBtn.addEventListener('click', () => {
+            sidebar.classList.remove('open');
+        });
+    }
+
     /**
      * Actualiza el indicador visual en el panel lateral.
      */
@@ -157,6 +173,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const targetId = btn.getAttribute('data-target');
             showAppContent(targetId);
             setActiveButton(targetId); // Actualiza el indicador
+            
+            // --- NUEVO: Cierra el menú en móvil al hacer clic ---
+            if (window.innerWidth <= 768) {
+                sidebar.classList.remove('open');
+            }
         });
     });
 
@@ -203,8 +224,6 @@ document.addEventListener('DOMContentLoaded', () => {
         const btnClockOut = contentNode.querySelector('#btn-clock-out');
         const offlineToggle = contentNode.querySelector('#offline-toggle');
         const statusContainer = contentNode.querySelector('#sync-status-container');
-        
-        // Lógica para OT-51 (restaurada)
         const btnSimulatePush = contentNode.querySelector('#btn-simulate-push');
 
         const updateButtonUI = () => {
@@ -250,7 +269,7 @@ document.addEventListener('DOMContentLoaded', () => {
         if (btnClockIn) btnClockIn.addEventListener('click', () => handleAttendance('Entrada'));
         if (btnClockOut) btnClockOut.addEventListener('click', () => handleAttendance('Salida'));
 
-        // Lógica para OT-51 (restaurada)
+        // Lógica para OT-51
         if (btnSimulatePush) btnSimulatePush.addEventListener('click', () => {
             showPushNotification("Tu turno de mañana ha sido re-asignado a las 10:00 AM.");
         });
